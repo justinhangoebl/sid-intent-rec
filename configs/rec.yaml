@@ -1,0 +1,23 @@
+# Recommendation stage:  uv run train rec --config configs/rec.yaml
+# Every key is optional except data.path; defaults live in pipeline/config.py.
+
+run:
+  out_dir: runs
+  wandb_project: "Intent Recommender Baselines"
+
+data:
+  path: dataset/onion/onion-interactions.tsv
+  user_col: user_id
+  item_col: onion_id
+  time_col: timestamp
+
+split:
+  strategy: leave_one_out   # leave_one_out | ratio
+
+model:
+  params: {}            # defined by the model, e.g. tiger: {semantic_path: runs/rkmeans/semantic_ids.npz}
+
+eval:
+  ks: [5, 10, 20]
+  monitor: ndcg@10      # selects the best epoch
+  patience: 0           # 0 = no early stopping

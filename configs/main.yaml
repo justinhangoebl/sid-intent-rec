@@ -1,0 +1,57 @@
+run:
+  out_dir: runs
+  seed: 42
+  device: cuda
+  gpu_id: 0
+  num_workers: 0
+  wandb: true
+  wandb_project: deafult-project
+  wandb_watch: true
+  wandb_watch_log: all
+  wandb_watch_freq: 100
+
+data:
+  path: ~
+  user_col: user_id
+  item_col: item_id
+  time_col: timestamp
+  sep: "\t"
+  min_user_inter: 5
+  min_item_inter: 5
+
+split:
+  strategy: leave_one_out
+  val_ratio: ~
+  test_ratio: ~
+
+model:
+  params: {}
+
+eval:
+  ks:
+    - 5
+    - 10
+    - 20
+  metrics:
+    - recall
+    - ndcg
+    - hit
+    - mrr
+  batch_size: 512
+  filter_seen: true
+  monitor: ndcg@10
+  val_every: 1
+  patience: 0
+  save_recs: true
+
+features:
+  path: ~
+  id_col: ~
+  cols: ~
+  drop_cols: []
+  sep: "\t"
+  normalize: standardize
+
+quantizer:
+  params: {}
+  dedup: true

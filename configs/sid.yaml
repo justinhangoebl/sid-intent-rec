@@ -1,0 +1,16 @@
+# Semantic-id stage:  uv run train sid --config configs/sid.yaml
+# Every key is optional except features.path; defaults live in pipeline/config.py.
+
+run:
+  out_dir: runs
+  device: auto          # auto | cpu | cuda
+  gpu_id: 0
+
+features:
+  path: dataset/onion/onion-musicnn.tsv
+  id_col: onion_id
+  drop_cols: [ID]
+  normalize: l2         # standardize | l2 | none
+
+quantizer:
+  dedup: true           # append a code that separates items sharing a semantic id

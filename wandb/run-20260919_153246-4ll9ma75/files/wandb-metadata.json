@@ -1,0 +1,20 @@
+{
+  "os": "Linux-6.12.0-211.37.1.el10_2.x86_64-x86_64-with-glibc2.39",
+  "python": "CPython 3.12.3",
+  "startedAt": "2026-09-19T13:32:46.652422Z",
+  "args": [
+    "train",
+    "--model",
+    "BPR",
+    "--config",
+    "configs/rec.yaml"
+  ],
+  "program": "/home/justin-hangoebl/master-thesis/sid-intent-rec/.venv/bin/recommender",
+  "codePath": ".venv/bin/recommender",
+  "codePathLocal": ".venv/bin/recommender",
+  "email": "hangoebl.j@gmail.com",
+  "root": "/home/justin-hangoebl/master-thesis/sid-intent-rec",
+  "host": "sxrk10.cp.jku.at",
+  "executable": "/home/justin-hangoebl/master-thesis/sid-intent-rec/.venv/bin/python3",
+  "writerId": "xuqmxcnt5xokv05utioqe982ctyp637g"
+}

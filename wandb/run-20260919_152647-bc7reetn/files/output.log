@@ -1,0 +1,47 @@
+[2;36m2026-09-19 [0m[2;36m [0m[34mINFO    [0m Running recommender [33mtask[0m=[35mtrain[0m [33mmodel[0m=[35mBPR[0m [33mconfig[0m=[35mconfigs[0m/rec.yaml
+[2;36m15:26:47   [0m[2;36m [0m
+[1;36mConfiguration:[0m
+  [1;33mrun:[0m
+    [1;32mout_dir[0m = [32m'runs'[0m
+    [1;32mseed[0m = [1;36m42[0m
+    [1;32mdevice[0m = [32m'cuda'[0m
+    [1;32mgpu_id[0m = [1;36m0[0m
+    [1;32mnum_workers[0m = [1;36m0[0m
+    [1;32mwandb[0m = [3;92mTrue[0m
+    [1;32mwandb_project[0m = [32m'Intent Recommender Baselines'[0m
+    [1;32mwandb_watch[0m = [3;92mTrue[0m
+    [1;32mwandb_watch_log[0m = [32m'all'[0m
+    [1;32mwandb_watch_freq[0m = [1;36m100[0m
+  [1;33mdata:[0m
+    [1;32mpath[0m = [32m'dataset/onion/onion-interactions.tsv'[0m
+    [1;32muser_col[0m = [32m'user_id'[0m
+    [1;32mitem_col[0m = [32m'onion_id'[0m
+    [1;32mtime_col[0m = [32m'timestamp'[0m
+    [1;32msep[0m = [32m'\t'[0m
+    [1;32mmin_user_inter[0m = [1;36m5[0m
+    [1;32mmin_item_inter[0m = [1;36m5[0m
+  [1;33msplit:[0m
+    [1;32mstrategy[0m = [32m'leave_one_out'[0m
+    [1;32mval_ratio[0m = [3;35mNone[0m
+    [1;32mtest_ratio[0m = [3;35mNone[0m
+  [1;33mmodel:[0m
+    [1;32mparams[0m = [1m{[0m[1m}[0m
+  [1;33meval:[0m
+    [1;32mks[0m = [1m[[0m[1;36m5[0m, [1;36m10[0m, [1;36m20[0m[1m][0m
+    [1;32mmetrics[0m = [1m[[0m[32m'recall'[0m, [32m'ndcg'[0m, [32m'hit'[0m, [32m'mrr'[0m[1m][0m
+    [1;32mbatch_size[0m = [1;36m512[0m
+    [1;32mfilter_seen[0m = [3;92mTrue[0m
+    [1;32mmonitor[0m = [32m'ndcg@10'[0m
+    [1;32mval_every[0m = [1;36m1[0m
+    [1;32mpatience[0m = [1;36m0[0m
+    [1;32msave_recs[0m = [3;92mTrue[0m
+  [1;33mfeatures:[0m
+    [1;32mpath[0m = [3;35mNone[0m
+    [1;32mid_col[0m = [32m'onion_id'[0m
+    [1;32mcols[0m = [3;35mNone[0m
+    [1;32mdrop_cols[0m = [1m[[0m[1m][0m
+    [1;32msep[0m = [32m'\t'[0m
+    [1;32mnormalize[0m = [32m'standardize'[0m
+  [1;33mquantizer:[0m
+    [1;32mparams[0m = [1m{[0m[1m}[0m
+    [1;32mdedup[0m = [3;92mTrue[0m
