@@ -1,6 +1,6 @@
 from torch.utils.data import Dataset
 
-from pipeline.models.recommender import Recommender
+from pipeline.models.base import Recommender
 
 
 class Trainer:

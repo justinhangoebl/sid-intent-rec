@@ -3,6 +3,7 @@
 
 run:
   out_dir: runs
+  wandb: true
   wandb_project: "Intent Recommender Baselines"
 
 data:
@@ -12,10 +13,11 @@ data:
   time_col: timestamp
 
 split:
-  strategy: leave_one_out   # leave_one_out | ratio
+  strategy: leave_one_out   # leave_one_out | temporal | random
 
 model:
-  params: {}            # defined by the model, e.g. tiger: {semantic_path: runs/rkmeans/semantic_ids.npz}
+  params: {}
+  batch_size: 512
 
 eval:
   ks: [5, 10, 20]

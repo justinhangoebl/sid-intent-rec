@@ -74,11 +74,6 @@ def require(cfg: dict, section: str, *keys: str) -> None:
 
 
 
-def _read(path: Path) -> dict:
-    with path.open("r", encoding="utf-8") as f:
-        return yaml.safe_load(f) or {}
-
-
 def _deep_merge(base: dict, override: dict) -> dict:
     result = base.copy()
 
@@ -97,9 +92,8 @@ def _deep_merge(base: dict, override: dict) -> dict:
 def load_config(path: str) -> dict:
     """Load main.yaml and recursively override it with the supplied config."""
     config_path = Path(path)
-    main_path = Path("configs/main.yaml")
 
-    main = _read(main_path)
+    main = _read(MAIN_CONFIG)
     override = _read(config_path)
 
     config = _deep_merge(main, override)

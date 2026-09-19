@@ -10,9 +10,12 @@ Examples:
     uv run quantizer optimize --quantizer RKMeans --config configs/quant.yaml
 """
 
+from pathlib import Path
+
 import click
 from pprint import pformat
 from pipeline.config import load_config
+from pipeline.recommender import MODELS, run as run_recommender
 from pipeline.utils.logging import get_logger, log_cfg
 from pipeline.utils.wandb import wandb_init
 
@@ -26,7 +29,8 @@ logger = get_logger(__name__)
 @click.option(
     "--model",
     required=True,
-    help="Model name (e.g., BPR, TopPop, SASRec, ...).",
+    type=click.Choice(list(MODELS), case_sensitive=False),
+    help="Model name.",
 )
 @click.option(
     "--config",
@@ -39,14 +43,26 @@ def recommender(task: str, model: str, config_path: str) -> None:
     """Run a recommender training, inference, or optimization task."""
     cfg = load_config(config_path)
     log_cfg(cfg)
-    wandb_run = wandb_init(cfg["run"])
-    
+    dataset_name = Path(cfg["data"]["path"]).parent.name
+    wandb_run = wandb_init(
+        cfg,
+        name=f"{model}_{dataset_name}",
+        tags=[model, dataset_name, f"seen:{cfg['eval']['seen_mode']}"],
+    )
+
     logger.info(
         "Running recommender task=%s model=%s config=%s",
         task,
         model,
         config_path,
     )
+    if task != "train":
+        raise click.UsageError(f"task {task!r} is not implemented yet")
+    try:
+        run_recommender(cfg, model, wandb_run)
+    finally:
+        if wandb_run is not None:
+            wandb_run.finish()
 
 
 @click.command()
@@ -67,7 +83,7 @@ def quantizer(task: str, quantizer: str, config_path: str) -> None:
     """Run a quantizer training, inference, or optimization task."""
     cfg = load_config(config_path)
     log_cfg(cfg)
-    wandb_run = wandb_init(cfg["run"])
+    wandb_run = wandb_init(cfg, name=quantizer, tags=[quantizer])
 
     logger.info(
         "Running quantizer task=%s quantizer=%s config=%s",

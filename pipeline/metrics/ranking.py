@@ -8,19 +8,26 @@ import torch
 
 
 def recall(hits: torch.Tensor, n_targets: torch.Tensor, k: int) -> torch.Tensor:
-    raise NotImplementedError
+    return hits[:, :k].sum(1) / n_targets.clamp(min=1)
 
 def precision(hits: torch.Tensor, n_targets: torch.Tensor, k: int) -> torch.Tensor:
-    raise NotImplementedError
+    return hits[:, :k].sum(1) / k
 
 def ndcg(hits: torch.Tensor, n_targets: torch.Tensor, k: int) -> torch.Tensor:
-    raise NotImplementedError
+    discount = 1.0 / torch.log2(torch.arange(2, k + 2, device=hits.device, dtype=hits.dtype))
+    dcg = (hits[:, :k] * discount).sum(1)
+    idcg = discount.cumsum(0)[n_targets.clamp(min=1, max=k) - 1]  # all targets ranked first
+    return dcg / idcg
 
 def hit(hits: torch.Tensor, n_targets: torch.Tensor, k: int) -> torch.Tensor:
-    raise NotImplementedError
+    return (hits[:, :k].sum(1) > 0).to(hits.dtype)
 
 def mrr(hits: torch.Tensor, n_targets: torch.Tensor, k: int) -> torch.Tensor:
-    raise NotImplementedError
+    ranks = torch.arange(1, k + 1, device=hits.device, dtype=hits.dtype)
+    return (hits[:, :k] / ranks).max(1).values  # the first hit has the largest 1/rank
+
+
+METRICS = {"recall": recall, "precision": precision, "ndcg": ndcg, "hit": hit, "mrr": mrr}
 
 """Beyond Accuracy: coverage, novelty, diversity, serendipity, fairness, ..."""
 

@@ -4,8 +4,8 @@ run:
   device: cuda
   gpu_id: 0
   num_workers: 0
-  wandb: true
-  wandb_project: deafult-project
+  wandb: false              # log to Weights & Biases (turn it on in the run config)
+  wandb_project: default-project
   wandb_watch: true
   wandb_watch_log: all
   wandb_watch_freq: 100
@@ -20,12 +20,13 @@ data:
   min_item_inter: 5
 
 split:
-  strategy: leave_one_out
+  strategy: leave_one_out   # leave_one_out | temporal | random
   val_ratio: ~
   test_ratio: ~
 
 model:
   params: {}
+  batch_size: 512
 
 eval:
   ks:
@@ -38,7 +39,7 @@ eval:
     - hit
     - mrr
   batch_size: 512
-  filter_seen: true
+  seen_mode: except_target   # all | except_target | none: which already seen items are masked from the ranking
   monitor: ndcg@10
   val_every: 1
   patience: 0
